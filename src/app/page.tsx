@@ -1,101 +1,80 @@
-import Image from "next/image";
+import { client } from "@/sanity/lib/client";
+import Link from "next/link";
+import Navbar from "@/app/Components/Navbar"
+import Whitenav from "@/app/Components/Whitenav"
+import Hero from "@/app/Components/Hero"
+import Footer from "@/app/Components/Footer"
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+export default async function LatestProducts() {
+  const data = await client.fetch(`
+  
+    *[_type == "productDetails"]{
+      _id,
+      productName,
+      "imageUrl": productImage.asset->url,
+      productPrice
+    }
+  `);
+return (
+  
+    <div className="w-screen bg-white mt-10">
+      <Navbar/>
+  <Whitenav/>
+  <Hero/>
+  
+      <h1 className="text-center text-2xl font-bold my-6">Latest Products</h1>
+      <div className="grid grid-cols-1 items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-10">
+        {data.map((product: any) => {
+          
+          let productLink;
+          if (product.productName === "Wood Comforter") {
+            productLink = "/Woodcomforter";
+          } else if (product.productName === "Comforter") {
+            productLink = "/Comforter";
+          } else if (product.productName === "Cantilever Chair") {
+            productLink = "/Cantileverchair"; 
+          }
+          else if (product.productName === "Comforter Set") {
+            productLink = "/Comforterset";
+          }
+          else if (product.productName === "Comforter Sofa") {
+            productLink = "/Comfortersofa";
+          }
+          else if (product.productName === "Flex Sofa") {
+            productLink = "/Flexsofa";
+          }
+          else if (product.productName === "Grey Chair") {
+            productLink = "/Greychair";
+          }
+          else if (product.productName === "White Chair") {
+            productLink = "/Whitechair";
+          }
+          else {productLink = "Product not found"}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          return (
+            <div key={product._id} className="border p-4 rounded-lg">
+              <Link href={productLink}>
+                
+                  <img
+                    src={product.imageUrl} alt={product} width={160} height={150} className="w-[160px] h-[150px] object-cover cursor-pointer"/>
+              
+              </Link>
+              <h2 className="text-lg font-bold mt-2 text-black">{product.productName}</h2>
+              <p className="mt-1 text-black">${product.productPrice}</p>
+              <button
+          className="w-[157px] h-[45px] font-poppins border border-transparent text-white bg-[rgba(251,46,134,1)] rounded-md shadow hover:bg-[rgba(220,20,90,1)]">{product.addToCartButton}Add to Cart
+          </button>
+            </div>
+          );
+          }
+        )
+      } 
+      </div>
+
+      <Footer/>
     </div>
-  );
+      )
 }
+  
+
+
