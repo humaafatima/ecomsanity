@@ -19,16 +19,9 @@ export default {
         type: 'number',
       },
       {
-        name: 'addToCartButton',
-        title: 'Add to Cart Button',
-        type: 'object',
-        fields: [
-          {
-            name: 'buttonLabel',
-            title: 'Button Label',
-            type: 'string',
-          },
-        ],
+        name: 'productDescription',
+        title: 'Product Description',
+        type: 'string',
       },
     ],
   };

@@ -1,7 +1,7 @@
 import Navbar from "@/app/Components/Navbar"
 import Whitenav from "@/app/Components/Whitenav"
 import Hero from "@/app/Components/Hero"
-
+import Footer from "@/app/Components/Footer"
 export default function About() {
   
 return (
@@ -46,6 +46,7 @@ Sustainability: We care about the planet. Our commitment to eco-friendly materia
 ensures that your furniture is as kind to the environment as it is to you.
 
 </p>
+<Footer/>
           </div>
 )
 };

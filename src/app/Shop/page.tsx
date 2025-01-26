@@ -2,6 +2,7 @@
 import Navbar from "../Components/Navbar"
 import Whitenav from "../Components/Whitenav"
 import Shopl from "@/app/Components/Shopl"
+import Footer from "@/app/Components/Footer"
 
 
 export default function Shop () {
@@ -11,7 +12,7 @@ export default function Shop () {
 <Navbar/>
 <Whitenav/>
 <Shopl/>
-
+<Footer/>
     </div>
     )
 }

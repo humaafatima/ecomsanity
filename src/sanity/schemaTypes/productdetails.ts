@@ -1,6 +1,6 @@
 export default {
     name: 'productDetails',
-    title: 'Product Deatils',
+    title: 'Product Details',
     type: 'document',
     fields: [
       {
@@ -8,6 +8,19 @@ export default {
         title: 'Product Name',
         type: 'string',
       },
+      {
+        title: 'Slug',
+        name: 'slug',
+        type: 'slug',
+        options: {
+          source: 'productName',
+          maxLength: 200, // will be ignored if slugify is set
+            slugify: input => input
+                                 .toLowerCase()
+                                 .replace(/\s+/g, '-')
+                                 .slice(0, 200)
+        },
+        },
       {
         name: 'productImage',
         title: 'Product Image',
